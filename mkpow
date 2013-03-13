@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# This script make a symlink of your rails app to use it with Pow.
+# As requirement, you need Pow to be installed.
+
+# Check if pow is installed, if not, then installs it.
+
+POW_ROOT="$HOME/Library/Application Support/Pow"
+APP_ROOT="$1"
+APP_NAME="$2"
+
+if [ ! -d "$POW_ROOT" ]; then
+	echo "Proceeding to Pow installation..."
+	curl get.pow.cx | sh
+else
+	echo "Pow already installed!"
+	
+	# cd to Pow symlink
+	echo "Going tp  ~/.pow"
+	cd ~/.pow
+
+	# Create the symlink for the app
+	echo Creating the symlink for the app "$APP_NAME" located at "$APP_ROOT"
+	ln -s "$APP_ROOT"$APP_NAME
+
+	# Redirects to app location
+	open http://test-app.dev/
+fi
